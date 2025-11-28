@@ -1,13 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 func max(vals ...int) int {
-	maxNumber := 0
+	var maxNumber int
 	if len(vals) == 0 {
 		return maxNumber
 	}
-	for _, val := range vals {
+	maxNumber = vals[0]
+	for _, val := range vals[1:] {
 		if val > maxNumber {
 			maxNumber = val
 		}
@@ -16,23 +20,46 @@ func max(vals ...int) int {
 	return maxNumber
 }
 
-func min(vals ...int) int {
+// Max function that requires at least one argument
+func max1(vals ...int) (int, error) {
 	if len(vals) == 0 {
-		return 0
+		log.Fatal("max1 requires at least one argument")
 	}
-	minNumber := vals[0]
-	for i := 1; i < len(vals); i++ {
-		if vals[i] < minNumber {
-			minNumber = vals[i]
+	return max(vals...), nil
+}
+
+func min(vals ...int) int {
+	var minNumber int
+	if len(vals) == 0 {
+		return minNumber
+	}
+	minNumber = vals[0]
+	for _, val := range vals[1:] {
+		if val < minNumber {
+			minNumber = val
 		}
 		continue
 	}
 	return minNumber
 }
 
+// Min function that requires at least one argument
+func min1(vals ...int) (int, error) {
+	if len(vals) == 0 {
+		log.Fatal("min1 requires at least one argument")
+	}
+	return min(vals...), nil
+}
+
 func main() {
 	fmt.Println(max(2, 5, 8, 4, 12))         // should return 12
+	fmt.Println(max(-2, -5, -7))             // should return -2
 	fmt.Println(max())                       // should return 0
 	fmt.Println(min(1, 4, 9, 0, -2, -9, 10)) // should return -9
 	fmt.Println(min())                       // should return 0
+
+	fmt.Println(max1(-4, -7, -12))      // should return -4
+	fmt.Println(min1(1, 3, 8, 9, 4, 6)) // should return 1
+	fmt.Println(max1())                 // should return an error
+	fmt.Println(min1())                 // should return an error
 }
