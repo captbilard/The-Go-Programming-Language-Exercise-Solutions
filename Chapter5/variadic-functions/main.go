@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 )
 
 func max(vals ...int) int {
@@ -51,15 +52,31 @@ func min1(vals ...int) (int, error) {
 	return min(vals...), nil
 }
 
+// strings.join
+func stringJoin(s ...string) string {
+	// loop through the array pf string and join them with a seperator
+	if len(s) == 0 {
+		return ""
+	}
+	var joinedString string
+	for _, val := range s {
+		joinedString = joinedString + " " + val
+	}
+	return strings.TrimSpace(joinedString)
+}
+
 func main() {
 	fmt.Println(max(2, 5, 8, 4, 12))         // should return 12
 	fmt.Println(max(-2, -5, -7))             // should return -2
 	fmt.Println(max())                       // should return 0
 	fmt.Println(min(1, 4, 9, 0, -2, -9, 10)) // should return -9
 	fmt.Println(min())                       // should return 0
+	fmt.Println(max1(-4, -7, -12))           // should return -4
+	fmt.Println(min1(1, 3, 8, 9, 4, 6))      // should return 1
+	// fmt.Println(max1())                 // should return an error
+	// fmt.Println(min1())                 // should return an error
 
-	fmt.Println(max1(-4, -7, -12))      // should return -4
-	fmt.Println(min1(1, 3, 8, 9, 4, 6)) // should return 1
-	fmt.Println(max1())                 // should return an error
-	fmt.Println(min1())                 // should return an error
+	w1 := "Hello"
+	w2 := "World"
+	fmt.Println(stringJoin(w1, w2)) // should return "Hello World"
 }
